@@ -1,0 +1,200 @@
+using System;
+using System.Globalization;
+using System.Text.RegularExpressions;
+
+
+namespace TZ
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string input_zadanie_1 = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15"; // введенная строка в консоли 
+            string input_zadanie_2_and_3 = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 60, 105, 420"; // введенная строка в консоли 
+            int[] numbers = ExtractNumbers(input_zadanie_1);
+
+            while (true)
+            {
+                ShowСondition(WriteLineNumber(), numbers, input_zadanie_1, input_zadanie_2_and_3);
+            }
+        }
+        static int WriteLineNumber()
+        {
+            int number;
+            Console.WriteLine("\nВы ввели число в диапазоне от 1 и до 3: ");
+            string input = Console.ReadLine();
+            try
+            {
+                number = int.Parse(input);
+                if(number > 0 && number <= 3)
+                {
+                    return number;
+                }
+                else
+                {
+                    return 0;
+                }
+               
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("\nОшибка: Введенная строка не является числом.");
+                return 0;
+            }   
+        }
+        static void ShowСondition(int index, int[] numbers , string input_zadanie_1 , string input_zadanie_2_and_3)
+        {
+            switch (index)
+            {
+                case 1:
+                    numbers = ExtractNumbers(input_zadanie_1);
+                    Zadacha_1(numbers);
+                    break;
+                case 2:
+                    numbers = ExtractNumbers(input_zadanie_2_and_3);
+                    Zadacha_2(numbers);
+                    break;
+                case 3:
+                    numbers = ExtractNumbers(input_zadanie_2_and_3);
+                    Zadacha_3(numbers);
+                    break;
+            }
+        }
+        static int[] ExtractNumbers(string input)
+        {
+            Regex regex = new Regex(@"\d+");
+            MatchCollection matches = regex.Matches(input);
+
+            int[] numbers = new int[matches.Count];
+
+            for (int i = 0; i < matches.Count; i++)
+            {
+                numbers[i] = int.Parse(matches[i].Value);
+            }
+
+            return numbers;
+        }
+        static void Zadacha_1(int[] numbers)
+        {
+            Console.Write("\n");
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                if (numbers[i] % 3 == 0 && numbers[i] % 5 == 0)
+                {
+                    Console.Write("fizz-buzz ");
+                }
+                else if (numbers[i] % 3 == 0)
+                {
+
+                    Console.Write("fizz ");
+                }
+                else if (numbers[i] % 5 == 0)
+                {
+                    Console.Write("buzz ");
+                }
+                else
+                {
+                    Console.Write(numbers[i] + " ");
+                }
+            }
+        }
+        static void Zadacha_2(int[] numbers)
+        {
+            Console.Write("\n");
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                if (numbers[i] % 3 == 0 && numbers[i] % 4 == 0 && numbers[i] % 5 == 0 && numbers[i] % 7 == 0)
+                {
+                    Console.Write("fizz-buzz-muzz-guzz ");
+                }
+                else if (numbers[i] % 3 == 0 && numbers[i] % 4 != 0 && numbers[i] % 5 == 0 && numbers[i] % 7 == 0 ||
+                    numbers[i] % 3 != 0 && numbers[i] % 4 == 0 && numbers[i] % 5 == 0 && numbers[i] % 7 == 0 ||
+                    numbers[i] % 3 == 0 && numbers[i] % 4 == 0 && numbers[i] % 5 != 0 && numbers[i] % 7 == 0 ||
+                    numbers[i] % 3 == 0 && numbers[i] % 4 == 0 && numbers[i] % 5 == 0 && numbers[i] % 7 != 0)
+                {
+                    Console.Write("fizz-buzz-guzz ");
+                }
+                else if (numbers[i] % 3 == 0 && numbers[i] % 5 == 0)
+                {
+                    Console.Write("fizz-buzz ");
+                }
+                else if (numbers[i] % 4 == 0 && numbers[i] % 7 == 0)
+                {
+                    Console.Write("muzz-guz ");
+                }
+                else if (numbers[i] % 3 == 0 && numbers[i] % 4 == 0)
+                {
+                    Console.Write("fizz-muzz ");
+                }
+                else if (numbers[i] % 3 == 0)
+                {
+                    Console.Write("fizz ");
+                }
+                else if (numbers[i] % 5 == 0)
+                {
+                    Console.Write("buzz ");
+                }
+                else if (numbers[i] % 4 == 0)
+                {
+                    Console.Write("muzz ");
+                }
+                else if (numbers[i] % 7 == 0)
+                {
+                    Console.Write("guzz ");
+                }
+                else
+                {
+                    Console.Write(numbers[i] + " ");
+                }
+            }
+        }
+        static void Zadacha_3(int[] numbers)
+        {
+            Console.Write("\n");
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                if (numbers[i] % 3 == 0 && numbers[i] % 4 == 0 && numbers[i] % 5 == 0 && numbers[i] % 7 == 0)
+                {
+                    Console.Write("good-boy-muzz-guzz ");
+                }
+                else if (numbers[i] % 3 == 0 && numbers[i] % 4 == 0 && numbers[i] % 5 == 0)
+                {
+                    Console.Write("good-boy-muzz ");
+                }
+                else if(numbers[i] % 3 == 0 && numbers[i] % 7 == 0 && numbers[i] % 5 == 0)
+                {
+                    Console.Write("good-boy-guzz ");
+                }
+                else if (numbers[i] % 3 == 0 && numbers[i] % 5 == 0)
+                {
+                    Console.Write("good-boy ");
+                }
+                else if (numbers[i] % 3 == 0 && numbers[i] % 4 == 0)
+                {
+                    Console.Write("fizz-muzz ");
+                }
+                else if (numbers[i] % 3 == 0)
+                {
+                    Console.Write("dog ");
+                }
+                else if (numbers[i] % 5 == 0)
+                {
+                    Console.Write("cat ");
+                }
+                else if (numbers[i] % 4 == 0)
+                {
+                    Console.Write("muzz ");
+                }
+                else if (numbers[i] % 7 == 0)
+                {
+                    Console.Write("guzz ");
+                }
+                else
+                {
+                    Console.Write( numbers[i] + " ");
+                }
+            }
+        }
+    }
+
+}
